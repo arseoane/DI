@@ -1,9 +1,9 @@
 import sys
-from PyQt6.QtWidgets import QApplication, QMainWindow, QWidget, QVBoxLayout, QComboBox, QRadioButton, QHBoxLayout, \
-    QGridLayout, QPushButton
+from PyQt6.QtWidgets import QApplication, QMainWindow, QWidget, QGridLayout, QPushButton
 from PyQt6.QtGui import QColor, QPalette
 import random
 
+minas = []
 
 class VentanaPrincipal(QMainWindow):
     def __init__(self):
@@ -23,25 +23,36 @@ class VentanaPrincipal(QMainWindow):
         tablero = QGridLayout()
         widget_central.setLayout(tablero)
 
+        self.casillas = []
+
         for i in range(8):
             for j in range(8):
                 casilla = Casilla()
+                self.casillas.append(casilla)
+
+                if (casilla.mina):
+                    minas.append(casilla)
+
                 tablero.addWidget(casilla.boton, i, j)
 
-        self.setLayout(tablero)
+
 
 class Casilla:
     def __init__(self):
         self.mina = random.choice([True, False])
         self.revelada = False
-        self.boton = QPushButton(f" ")
+        self.boton = QPushButton(" ")
         self.boton.clicked.connect(self.revelar)
 
     def revelar(self):
         if self.mina:
             self.boton.setText("💣")
+            for casilla in minas:
+                casilla.boton.setText("💣")
+
         else:
             self.boton.setText("0")
+
         self.revelada = True
         self.boton.setEnabled(False)
 
