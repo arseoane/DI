@@ -3,6 +3,7 @@ from PyQt6.QtWidgets import QApplication, QMainWindow, QWidget, QGridLayout, QPu
 from PyQt6.QtGui import QColor, QPalette
 import random
 
+# Declaramos las listas para almacenar las casillas y las minas
 minas = []
 casillas = []
 
@@ -13,6 +14,7 @@ class VentanaPrincipal(QMainWindow):
         self.setWindowTitle("Buscaminas")
         self.setFixedSize(500, 500)
 
+        # Color de fondo de la ventana principal
         self.setAutoFillBackground(True)
         paleta = self.palette()
         paleta.setColor(QPalette.ColorRole.Window, QColor("limegreen"))
@@ -24,8 +26,7 @@ class VentanaPrincipal(QMainWindow):
         tablero = QGridLayout()
         widget_central.setLayout(tablero)
 
-
-
+        # Colocamos las casillas en el tablero y las añadimos a la lista de casillas y minas
         for i in range(8):
             for j in range(8):
                 casilla = Casilla()
@@ -49,10 +50,10 @@ class Casilla:
         if self.mina:
             self.boton.setText("💣")
             for casilla in minas:
-                casilla.boton.setText("💣")
+                casilla.boton.setText("💣") # Si una mina es revelada, se muestran todas las minas en el tablero
 
             for casilla in casillas:
-                casilla.boton.setEnabled(False)
+                casilla.boton.setEnabled(False) # Si una mina es revelada, se deshabilitan todas las casillas del tablero
 
         else:
             self.boton.setText("0")
